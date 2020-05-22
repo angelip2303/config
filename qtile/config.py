@@ -39,7 +39,7 @@ colors = {
     "volume-bg":        "#50fa7b",   #  9. green    -->     bar(volume-background)
     "net-bg":           "#ff5555",   # 10. red      -->     bar(net-background)
     "updates-bg":       "#ffb86c",   # 11. orange   -->     bar(updates-background)
-    "clock-bg":         "#ff79c6",   # 12. pink     -->     bar(clock-background)
+    "systray-bg":       "#ff79c6",   # 12. pink     -->     bar(systray-background)
     "letters":          "#000000",   # 13. black    -->     bar(letters)
 }
 
@@ -86,10 +86,21 @@ keys = [
     # Spawn rofi d-run.
     Key([mod], "d", lazy.spawn('rofi -show drun')),
 
-    #Media keys.
+    # Media keys.
     Key([], 'XF86AudioMute', lazy.spawn('amixer -D pulse set Master toggle')),
 	Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer -c 0 -q set Master 2dB+')),
 	Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer -c 0 -q set Master 2dB-')),
+    Key([], "XF86AudioNext", lazy.spawn("mpc next")),
+    Key([], "XF86AudioPrev", lazy.spawn("mpc prev")),
+    Key([], "XF86AudioPlay", lazy.spawn("mpc toggle")),
+    Key([], "XF86AudioStop", lazy.spawn("mpc stop")),
+
+    # Brightness.
+    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +2%")),
+    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 2%-")),
+
+    # Print-screen.
+    Key([], "Print", lazy.spawn("xfce4-screenshooter")),
 ]
 
 mouse = [
@@ -270,20 +281,21 @@ def init_widgets_list():
         widget.Sep(linewidth = 0, padding = 6),
 
         # Net.
-        widget.TextBox(
-            text = str("  "),
-            foreground = colors["letters"],
-            background = colors["net-bg"]
-        ),
-        widget.Net(
-            foreground = colors["letters"],
-            background = colors["net-bg"],
-            format = "{down} ↓↑ {up}",
-            padding = 5
-        ),
 
-        #Separation between widgets.
-        widget.Sep(linewidth = 0, padding = 6),
+        # widget.TextBox(
+        #     text = "  ",
+        #     foreground = colors["letters"],
+        #     background = colors["net-bg"]
+        # ),
+        # widget.Net(
+        #     foreground = colors["letters"],
+        #     background = colors["net-bg"],
+        #     format = "{down} ↓↑ {up}",
+        #     padding = 5
+        # ),
+        #
+        # Separation between widgets.
+        # widget.Sep(linewidth = 0, padding = 6),
 
         # Packages to update.
         widget.TextBox(
@@ -302,17 +314,25 @@ def init_widgets_list():
         #Separation between widgets.
         widget.Sep(linewidth = 0, padding = 6),
 
-        # Clock.
+        # Systray.
         widget.TextBox(
             text = "  ",
             foreground = colors["letters"],
-            background = colors["clock-bg"]
+            background = colors["systray-bg"]
         ),
         widget.Clock(
             format='%A, %B %d [ %H:%M ]',
             foreground = colors["letters"],
-            background = colors["clock-bg"],
+            background = colors["systray-bg"],
             padding = 5
+        ),
+        widget.Systray(
+            background = colors["systray-bg"]
+        ),
+        widget.Sep(
+            linewidth = 0,
+            padding = 6,
+            background = colors["systray-bg"]
         ),
     ]
 
