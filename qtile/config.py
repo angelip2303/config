@@ -39,7 +39,7 @@ colors = {
     "volume-bg":        "#50fa7b",   #  9. green    -->     bar(volume-background)
     "net-bg":           "#ff5555",   # 10. red      -->     bar(net-background)
     "updates-bg":       "#ffb86c",   # 11. orange   -->     bar(updates-background)
-    "systray-bg":       "#ff79c6",   # 12. pink     -->     bar(systray-background)
+    "clock-bg":       "#ff79c6",   # 12. pink     -->     bar(systray-background)
     "letters":          "#000000",   # 13. black    -->     bar(letters)
 }
 
@@ -170,11 +170,15 @@ extension_defaults = widget_defaults.copy()
 
 def init_widgets_list():
     return [
+
+        # Linux.
+        # widget.TextBox(text = "  "),
+        widget.TextBox(text = "  "),
+
         # Separator.
-        widget.Sep(
-            linewidth = 0,  #To make it invisible.
-            padding = 6     #Length with respect to the left most border.
-        ),
+        # widget.Sep(
+        #     linewidth = 0,  #To make it invisible.
+        # ),
 
         # List of groups.
         widget.GroupBox(
@@ -197,6 +201,11 @@ def init_widgets_list():
             foreground = colors["foreground"],
             background = colors["background"]
         ),
+
+        # Systray.
+        widget.TextBox(text = " |"),
+        widget.Systray(),
+        widget.TextBox(text = " |"),
 
         # Prompt.
         widget.Prompt(
@@ -314,25 +323,17 @@ def init_widgets_list():
         #Separation between widgets.
         widget.Sep(linewidth = 0, padding = 6),
 
-        # Systray.
+        # Clock.
         widget.TextBox(
             text = "  ",
             foreground = colors["letters"],
-            background = colors["systray-bg"]
+            background = colors["clock-bg"]
         ),
         widget.Clock(
             format='%A, %B %d [ %H:%M ]',
             foreground = colors["letters"],
-            background = colors["systray-bg"],
+            background = colors["clock-bg"],
             padding = 5
-        ),
-        widget.Systray(
-            background = colors["systray-bg"]
-        ),
-        widget.Sep(
-            linewidth = 0,
-            padding = 6,
-            background = colors["systray-bg"]
         ),
     ]
 
