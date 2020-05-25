@@ -9,3 +9,4 @@ feh --bg-scale ~/.config/qtile/wallpapers/wallpaper2.png &
 
 exec picom --config ~/.config/picom/picom.conf &
 exec nm-applet &
+insync
