@@ -39,7 +39,7 @@ colors = {
     "volume-bg":        "#50fa7b",   #  9. green    -->     bar(volume-background)
     "net-bg":           "#ff5555",   # 10. red      -->     bar(net-background)
     "updates-bg":       "#ffb86c",   # 11. orange   -->     bar(updates-background)
-    "clock-bg":       "#ff79c6",   # 12. pink     -->     bar(systray-background)
+    "clock-bg":         "#ff79c6",   # 12. pink     -->     bar(systray-background)
     "letters":          "#000000",   # 13. black    -->     bar(letters)
 }
 
@@ -173,7 +173,7 @@ def init_widgets_list():
 
         # Linux.
         # widget.TextBox(text = "  "),
-        widget.TextBox(text = "  "),
+        widget.TextBox(text = "   |"),
 
         # Separator.
         # widget.Sep(
@@ -185,17 +185,19 @@ def init_widgets_list():
             font = "Anonymice Nerd Font Bold",
             fontsize = 9,
             # margin_x = 0,
-            # margin_y = 3,
-            padding_x = 5, # Gap between the frame and the letters: x-axis.
-            padding_y = 3, # Gap between the frame and the letters: y-axis.
-            borderwidth = 1.5,
+            margin_y = 3.5,
+            padding_x = 4, # Gap between the frame and the letters: x-axis.
+            padding_y = 4, # Gap between the frame and the letters: y-axis.
+            spacing = 3,
+            borderwidth = 2,
             active = colors["active"],
             inactive = colors["inactive"],
             rounded = False, # Rounded frame or not.
             highlight_color = colors["highlight"],
-            highligh_method = "line",
+            highligh_method = "block",
+            urgent_alert_method = "block",
             this_current_screen_border = colors["highlight"],
-            this_screen_border = colors ["highlight"],
+            this_screen_border = colors["highlight"],
             other_current_screen_border = colors["background"],
             other_screen_border = colors["background"],
             foreground = colors["foreground"],
@@ -203,7 +205,7 @@ def init_widgets_list():
         ),
 
         # Systray.
-        widget.TextBox(text = " |"),
+        widget.TextBox(text = "|"),
         widget.Systray(),
         widget.TextBox(text = " |"),
 
@@ -255,7 +257,7 @@ def init_widgets_list():
             ),
 
         #Separation between widgets.
-        widget.Sep(linewidth = 0, padding = 6),
+        widget.Sep(linewidth = 0, padding = 4),
 
         # Battery.
         widget.TextBox(
@@ -272,7 +274,7 @@ def init_widgets_list():
         ),
 
         #Separation between widgets.
-        widget.Sep(linewidth = 0, padding = 6),
+        widget.Sep(linewidth = 0, padding = 4),
 
         # Volume.
         widget.TextBox(
@@ -287,7 +289,7 @@ def init_widgets_list():
         ),
 
         #Separation between widgets.
-        widget.Sep(linewidth = 0, padding = 6),
+        widget.Sep(linewidth = 0, padding = 4),
 
         # Net.
 
@@ -321,7 +323,7 @@ def init_widgets_list():
         ),
 
         #Separation between widgets.
-        widget.Sep(linewidth = 0, padding = 6),
+        widget.Sep(linewidth = 0, padding = 4),
 
         # Clock.
         widget.TextBox(
