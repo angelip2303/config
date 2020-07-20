@@ -4,9 +4,30 @@
 
 # feh --bg-scale ~/.config/qtile/wallpapers/wallpaper1.jpg &
 feh --bg-scale ~/.config/qtile/wallpapers/wallpaper2.png &
+# feh --bg-scale ~/.config/qtile/wallpapers/wallpaper3.png &
+# feh --bg-scale ~/.config/qtile/wallpapers/wallpaper4.jpg &
+# feh --bg-scale ~/.config/qtile/wallpapers/wallpaper5.jpg &
 
 # -*- STARTUP -*-
 
-exec picom --config ~/.config/picom/picom.conf &
-exec nm-applet &
-insync
+    #########
+    # PICOM #
+    #########
+
+    # If picom is running, kill it to prevent multiple instances.
+    if ps -A | grep picom; then
+        killall -q picom
+    fi
+
+    # Load picom
+    exec picom --experimental-backends --config ~/.config/picom/picom.conf &
+    
+    #########
+    # DUNST #
+    #########
+
+    # If dunst is running, kill it to prevent multiple instances.
+    if ps -A | grep dunst; then
+        killall -q dunst
+    fi
+    dunst -config ~/.config/dunst/dunstrc/dunstrc &
