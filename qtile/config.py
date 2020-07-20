@@ -45,7 +45,10 @@ colors = {
 
 # -*- APPS -*-
 
-term = "alacritty"
+term = 'alacritty'
+browser = 'firefox'
+vim = 'neovim'
+file_manager = 'thunar'
 
 # -*- STARTUP -*-
 
@@ -58,49 +61,54 @@ def autostart():
 
 keys = [
     # Switch between windows in current stack pane.
-    Key([mod], "k", lazy.layout.down()),
-    Key([mod], "j", lazy.layout.up()),
-
+    Key([mod], 'k', lazy.layout.down()),
+    Key([mod], 'j', lazy.layout.up()),
+   
     # Move windows up or down in current stack.
-    Key([mod, "control"], "k", lazy.layout.shuffle_down()),
-    Key([mod, "control"], "j", lazy.layout.shuffle_up()),
+    Key([mod, 'control'], 'k', lazy.layout.shuffle_down()),
+    Key([mod, 'control'], 'j', lazy.layout.shuffle_up()),
 
     # Switch window focus to other pane(s) of stack.
-    Key([mod], "space", lazy.layout.next()),
+    Key([mod], 'space', lazy.layout.next()),
 
     # Swap panes of split stack.
-    Key([mod, "shift"], "space", lazy.layout.rotate()),
+    Key([mod, 'shift'], 'space', lazy.layout.rotate()),
 
     # Open the terminal.
-    Key([mod], "Return", lazy.spawn("alacritty")),
+    Key([mod], 'Return', lazy.spawn(term)),
 
     # Toggle between different layouts as defined below.
-    Key([mod], "Tab", lazy.next_layout()),
-    Key([mod], "w", lazy.window.kill()),
+    Key([mod], 'Tab', lazy.next_layout()),
+    Key([mod], 'w', lazy.window.kill()),
 
     # Manage the DE.
-    Key([mod, "control"], "r", lazy.restart()), # --> refresh.
-    Key([mod, "control"], "q", lazy.shutdown()), # --> shutdown.
-    Key([mod], "r", lazy.spawncmd()), # --> spawn.
+    Key([mod, 'control'], 'r', lazy.restart()), # --> refresh.
+    Key([mod, 'control'], 'q', lazy.shutdown()), # --> shutdown.
+    Key([mod], 'r', lazy.spawncmd()), # --> spawn.
 
     # Spawn rofi d-run.
-    Key([mod], "d", lazy.spawn('rofi -show drun')),
+    Key([mod], 'd', lazy.spawn('rofi -show drun')),
 
     # Media keys.
     Key([], 'XF86AudioMute', lazy.spawn('amixer -D pulse set Master toggle')),
-	Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer -c 0 -q set Master 2dB+')),
-	Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer -c 0 -q set Master 2dB-')),
-    Key([], "XF86AudioNext", lazy.spawn("mpc next")),
-    Key([], "XF86AudioPrev", lazy.spawn("mpc prev")),
-    Key([], "XF86AudioPlay", lazy.spawn("mpc toggle")),
-    Key([], "XF86AudioStop", lazy.spawn("mpc stop")),
+    Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer -c 1 -q set Master 5%+')),
+    Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer -c 1 -q set Master 5-')),
+    Key([], 'XF86AudioNext', lazy.spawn('mpc next')),
+    Key([], 'XF86AudioPrev', lazy.spawn('mpc prev')),
+    Key([], 'XF86AudioPlay', lazy.spawn('mpc toggle')),
+    Key([], 'XF86AudioStop', lazy.spawn('mpc stop')),
 
     # Brightness.
-    Key([], "XF86MonBrightnessUp", lazy.spawn("brightnessctl set +2%")),
-    Key([], "XF86MonBrightnessDown", lazy.spawn("brightnessctl set 2%-")),
+    Key([], 'XF86MonBrightnessUp', lazy.spawn('brightnessctl set +2%')),
+    Key([], 'XF86MonBrightnessDown', lazy.spawn('brightnessctl set 2%-')),
 
     # Print-screen.
-    Key([], "Print", lazy.spawn("xfce4-screenshooter")),
+    Key([], 'Print', lazy.spawn('xfce4-screenshooter')),
+
+    # App keys.
+    Key([mod], 'b', lazy.spawn(browser)),
+    Key([mod], 't', lazy.spawn('task')),
+    Key([mod], 'f', lazy.spawn(file_manager)),
 ]
 
 mouse = [
@@ -113,11 +121,15 @@ mouse = [
 
 # -*- GROUPS -*-
 
+dev = "DEV"
+web = "WEB"
+term = "TERM"
+
 def init_group_names():
     return [
-        ("DEV", {'layout': 'monadtall'}),
-        ("WEB", {'layout': 'monadtall'}),
-        ("TERM", {'layout': 'monadtall'}),
+        (dev, {'layout': 'monadtall'}),
+        (web, {'layout': 'monadtall'}),
+        (term, {'layout': 'monadtall'}),
     ]
 
 def init_groups():
@@ -172,8 +184,8 @@ def init_widgets_list():
     return [
 
         # Linux.
-        # widget.TextBox(text = "  "),
-        widget.TextBox(text = "   |"),
+        widget.TextBox(text = "  "),
+        # widget.TextBox(text = "   |"),
 
         # Separator.
         # widget.Sep(
@@ -205,9 +217,9 @@ def init_widgets_list():
         ),
 
         # Systray.
-        widget.TextBox(text = "|"),
+        # widget.TextBox(text = "|"),
         widget.Systray(),
-        widget.TextBox(text = " |"),
+        # widget.TextBox(text = " |"),
 
         # Prompt.
         widget.Prompt(
