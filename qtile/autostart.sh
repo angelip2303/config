@@ -3,10 +3,11 @@
 # -*- WALLPAPERS -*-
 
 # feh --bg-scale ~/.config/qtile/wallpapers/wallpaper1.jpg &
-feh --bg-scale ~/.config/qtile/wallpapers/wallpaper2.png &
+# feh --bg-scale ~/.config/qtile/wallpapers/wallpaper2.png &
 # feh --bg-scale ~/.config/qtile/wallpapers/wallpaper3.png &
 # feh --bg-scale ~/.config/qtile/wallpapers/wallpaper4.jpg &
 # feh --bg-scale ~/.config/qtile/wallpapers/wallpaper5.jpg &
+feh --bg-scale ~/.config/qtile/wallpapers/wallpaper6.jpg &
 
 # -*- STARTUP -*-
 
@@ -30,4 +31,11 @@ feh --bg-scale ~/.config/qtile/wallpapers/wallpaper2.png &
     if ps -A | grep dunst; then
         killall -q dunst
     fi
+    
     dunst -config ~/.config/dunst/dunstrc/dunstrc &
+
+    #############
+    # NM-APPLET #
+    #############
+
+    exec --no-startup-id nm-applet
