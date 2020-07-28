@@ -1,8 +1,8 @@
-#My qtile config.
+# My qtile config.
 
 #     _     U _____ u
-# U  /"\  u \| ___"|/
-#  \/ _ \/   |  _|"
+# U  /'\  u \| ___'|/
+#  \/ _ \/   |  _|'
 #  / ___ \   | |___
 # /_/   \_\  |_____|
 #  \\    >>  <<   >>
@@ -18,34 +18,41 @@ from typing import List
 
 # -*- VARIABLES -*-
 
-mod = "mod4"
-prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
+mod = 'mod4'
+prompt = '{0}@{1}: '.format(os.environ['USER'], socket.gethostname())
 
-wmname = "LG3D" # Assignment made for the DE to work with some java IDEs.
+wmname = 'LG3D' # Assignment made for the DE to work with some java IDEs.
+
+# -*- FONTS -*-
+
+fonts = {
+    'mono-font':    'JetBrainsMono NF',
+    'bar-font':     'JetBrainsMonoMedium NF',
+}
 
 # -*- COLORS -*-
 
 #Dracula color scheme.
 colors = {
-    "background":       "#282a36",   #  0. grey     -->     bar(bar-background)
-    "foreground":       "#f8f8f2",   #  1. white    -->     prompt(foreground)
-    "active":           "#ff79c6",   #  2. pink     -->     bar(active)
-    "inactive":         "#6272a4",   #  3. blue     -->     bar(inactive)
-    "highlight":        "#ff79c6",   #  4. pink     -->     bar(highlight)
-    "border-non-focus": "#1d2330",   #  5. dk-grey  -->     border(non-focus)
-    "border-focus":     "#e1acff",   #  6. lt-pink  -->     border(focus)
-    "hardware-bg":      "#f1fa8c",   #  7. yellow   -->     bar(hardware-background)
-    "battery-bg":       "#8be9fd",   #  8. aqua     -->     bar(battery-background)
-    "volume-bg":        "#50fa7b",   #  9. green    -->     bar(volume-background)
-    "net-bg":           "#ff5555",   # 10. red      -->     bar(net-background)
-    "updates-bg":       "#ffb86c",   # 11. orange   -->     bar(updates-background)
-    "clock-bg":         "#ff79c6",   # 12. pink     -->     bar(systray-background)
-    "letters":          "#000000",   # 13. black    -->     bar(letters)
+    # Background and Foreground.
+    'background':       '#282a36',   #  0. grey     -->     bar(bar-background)
+    'foreground-hc':    '#f8f8f2',   #  1. white    -->     prompt(foreground-hc)
+    'foreground-lc':    '#000000',   #  2. black    -->     bar(foreground-lc)
+    # Borders.
+    'border-non-focus': '#6272a4',   #  3. dk-grey  -->     border(non-focus)
+    'border-focus':     '#e1acff',   #  4. lt-pink  -->     border(focus)
+    # Widgets.
+    'yellow':           '#f1fa8c',   #  5. yellow   -->     bar(hardware-background)
+    'aqua':             '#8be9fd',   #  6. aqua     -->     bar(battery-background)
+    'green':            '#50fa7b',   #  7. green    -->     bar(volume-background)
+    'red':              '#ff5555',   #  8. red      -->     bar(net-background)
+    'orange':           '#ffb86c',   #  9. orange   -->     bar(updates-background)
+    'pink':             '#ff79c6',   # 10. pink     -->     bar(systray-background)
 }
 
 # -*- APPS -*-
 
-term = 'alacritty'
+term = 'termite'
 browser = 'firefox'
 vim = 'neovim'
 file_manager = 'thunar'
@@ -90,7 +97,7 @@ keys = [
     Key([mod], 'd', lazy.spawn('rofi -show drun')),
 
     # Media keys.
-    Key([], 'XF86AudioMute', lazy.spawn('amixer -D pulse set Master toggle')),
+    Key([], 'XF86AudioMute', os.system('$~/.config/dunst/dunstrc/volume.sh up')),
     Key([], 'XF86AudioRaiseVolume', lazy.spawn('amixer -c 1 -q set Master 5%+')),
     Key([], 'XF86AudioLowerVolume', lazy.spawn('amixer -c 1 -q set Master 5-')),
     Key([], 'XF86AudioNext', lazy.spawn('mpc next')),
@@ -112,18 +119,18 @@ keys = [
 ]
 
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),
+    Drag([mod], 'Button1', lazy.window.set_position_floating(),
          start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
+    Drag([mod], 'Button3', lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    Click([mod], 'Button2', lazy.window.bring_to_front())
 ]
 
 # -*- GROUPS -*-
 
-dev = "DEV"
-web = "WEB"
-term = "TERM"
+dev = 'DEV'
+web = 'WEB'
+term = 'TERM'
 
 def init_group_names():
     return [
@@ -135,21 +142,21 @@ def init_group_names():
 def init_groups():
     return [Group(name, **kwargs) for (name, kwargs) in group_names]
 
-if (__name__ in ["config", "__main__"]):
+if (__name__ in ['config', '__main__']):
     group_names = init_group_names()
     groups = init_groups()
 
 for i, (name, kwargs) in enumerate(group_names, 1):
     keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Change to another group.
-    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send window to group.
+    keys.append(Key([mod, 'shift'], str(i), lazy.window.togroup(name))) # Send window to group.
 
 # -*- LAYOUTS -*-
 
 layout_theme = {
-    "border_width": 2,
-    "margin": 6,
-    "border_focus":  colors["border-focus"],
-    "border_normal": colors["border-non-focus"]
+    'border_width': 2,
+    'margin': 6,
+    'border_focus':  colors['border-focus'],
+    'border_normal': colors['border-non-focus']
 }
 
 layouts = [
@@ -170,10 +177,10 @@ layouts = [
 # -*- DEFAULT SETTINGS FOR THE WIDGETS -*-
 
 widget_defaults = dict(
-    font = "Anonymice Nerd Font",
+    font = fonts['bar-font'],
     fontsize = 12,
     padding = 3,
-    background = colors["background"]
+    background = colors['background']
 )
 
 extension_defaults = widget_defaults.copy()
@@ -183,51 +190,49 @@ extension_defaults = widget_defaults.copy()
 def init_widgets_list():
     return [
 
-        # Linux.
-        widget.TextBox(text = "  "),
-        # widget.TextBox(text = "   |"),
-
-        # Separator.
-        # widget.Sep(
-        #     linewidth = 0,  #To make it invisible.
-        # ),
-
         # List of groups.
         widget.GroupBox(
-            font = "Anonymice Nerd Font Bold",
-            fontsize = 9,
-            # margin_x = 0,
+
+            # -*- FONT Config -*-
+            font = fonts['mono-font'],
+            fontsize = 12,
+
+            # -*- MARGINS and BORDERS -*-
+            margin_x = 0,
             margin_y = 3.5,
-            padding_x = 4, # Gap between the frame and the letters: x-axis.
-            padding_y = 4, # Gap between the frame and the letters: y-axis.
-            spacing = 3,
-            borderwidth = 2,
-            active = colors["active"],
-            inactive = colors["inactive"],
+            padding_x = 5, # Gap between the frame and the letters: x-axis.
+            padding_y = 5, # Gap between the frame and the letters: y-axis.
+            borderwidth = 3,
             rounded = False, # Rounded frame or not.
-            highlight_color = colors["highlight"],
-            highligh_method = "block",
-            urgent_alert_method = "block",
-            this_current_screen_border = colors["highlight"],
-            this_screen_border = colors["highlight"],
-            other_current_screen_border = colors["background"],
-            other_screen_border = colors["background"],
-            foreground = colors["foreground"],
-            background = colors["background"]
+
+            # -*- HIGHLIGHTING -*-
+            highlight_method = 'block',
+            urgent_alert_method = 'block',
+
+            # -*- COLORS -*-
+            active = colors['foreground-hc'],
+            inactive = colors['foreground-hc'],
+            
+            this_current_screen_border = colors['pink'], # Color of the selected workspace.
+            # this_screen_border = colors['background'],
+            # other_current_screen_border = colors['background'],
+            # other_screen_border = colors['background'],
+
+            background = colors['background']
         ),
 
         # Systray.
-        # widget.TextBox(text = "|"),
+        # widget.TextBox(text = '|'),
         widget.Systray(),
-        # widget.TextBox(text = " |"),
+        # widget.TextBox(text = ' |'),
 
         # Prompt.
         widget.Prompt(
             prompt = prompt,
-            font = "Anonymice Nerd Font Mono",
+            font = fonts['mono-font'],
             padding = 10,
-            foreground = colors["foreground"],
-            background = colors["background"]
+            foreground = colors['foreground-hc'],
+            background = colors['background']
         ),
 
         # Separator.
@@ -246,25 +251,27 @@ def init_widgets_list():
         # Hardware USAGE.
             # Memory.
             widget.TextBox(
-                text = "  ",
-                foreground = colors["letters"],
-                background = colors["hardware-bg"]
+                text = '  ',
+                fontsize = 15,
+                foreground = colors['foreground-lc'],
+                background = colors['yellow']
             ),
             widget.Memory(
-                foreground = colors["letters"],
-                background = colors["hardware-bg"]
+                foreground = colors['foreground-lc'],
+                background = colors['yellow']
             ),
 
             # CPU.
             widget.TextBox(
-                text = "  ",
-                foreground = colors["letters"],
-                background = colors["hardware-bg"]
+                text = '  ',
+                fontsize = 15,
+                foreground = colors['foreground-lc'],
+                background = colors['yellow']
             ),
             widget.CPU(
-                format = "{freq_current}GHz {load_percent}%",
-                foreground = colors["letters"],
-                background = colors["hardware-bg"],
+                format = '{freq_current}GHz {load_percent}%',
+                foreground = colors['foreground-lc'],
+                background = colors['yellow'],
                 padding = 5
             ),
 
@@ -273,14 +280,14 @@ def init_widgets_list():
 
         # Battery.
         widget.TextBox(
-            text = "  ",
-            foreground = colors["letters"],
-            background = colors["battery-bg"]
+            text = '  ',
+            foreground = colors['foreground-lc'],
+            background = colors['aqua']
         ),
         widget.Battery(
             format = '{percent:2.0%}',
-            foreground = colors["letters"],
-            background = colors["battery-bg"],
+            foreground = colors['foreground-lc'],
+            background = colors['aqua'],
             update_delay = 5,
             padding = 5
         ),
@@ -290,13 +297,14 @@ def init_widgets_list():
 
         # Volume.
         widget.TextBox(
-            text = str("  "),
-            foreground = colors["letters"],
-            background = colors["volume-bg"]
+            text = str('  '),
+            fontsize = 15, 
+            foreground = colors['foreground-lc'],
+            background = colors['green']
         ),
         widget.Volume(
-            foreground = colors["letters"],
-            background = colors["volume-bg"],
+            foreground = colors['foreground-lc'],
+            background = colors['green'],
             padding = 5
         ),
 
@@ -306,14 +314,14 @@ def init_widgets_list():
         # Net.
 
         # widget.TextBox(
-        #     text = "  ",
-        #     foreground = colors["letters"],
-        #     background = colors["net-bg"]
+        #     text = '  ',
+        #     foreground = colors['foreground-lc'],
+        #     background = colors['red']
         # ),
         # widget.Net(
-        #     foreground = colors["letters"],
-        #     background = colors["net-bg"],
-        #     format = "{down} ↓↑ {up}",
+        #     foreground = colors['foreground-lc'],
+        #     background = colors['red'],
+        #     format = '{down} ↓↑ {up}',
         #     padding = 5
         # ),
         #
@@ -322,15 +330,16 @@ def init_widgets_list():
 
         # Packages to update.
         widget.TextBox(
-            text = " ﮮ ",
-            foreground = colors["letters"],
-            background = colors["updates-bg"]
+            text = '  ',
+            fontsize = 18, 
+            foreground = colors['foreground-lc'],
+            background = colors['orange']
         ),
         widget.Pacman(
-            execute = "alacritty",
+            execute = 'alacritty',
             update_interval = 1800,
-            foreground = colors["letters"],
-            background = colors["updates-bg"],
+            foreground = colors['foreground-lc'],
+            background = colors['orange'],
             padding = 5
         ),
 
@@ -339,14 +348,14 @@ def init_widgets_list():
 
         # Clock.
         widget.TextBox(
-            text = "  ",
-            foreground = colors["letters"],
-            background = colors["clock-bg"]
+            text = '  ',
+            foreground = colors['foreground-lc'],
+            background = colors['pink']
         ),
         widget.Clock(
             format='%A, %B %d [ %H:%M ]',
-            foreground = colors["letters"],
-            background = colors["clock-bg"],
+            foreground = colors['foreground-lc'],
+            background = colors['pink'],
             padding = 5
         ),
     ]
@@ -367,7 +376,7 @@ def init_screens():
         Screen(top=bar.Bar(widgets=init_widgets_screen2(), opacity=0.95, size=20))
     ]
 
-if __name__ in ["config", "__main__"]:
+if __name__ in ['config', '__main__']:
     screens = init_screens()
 
 # -*- FLOATING WINDOWS -*-
@@ -396,4 +405,4 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
 ])
 auto_fullscreen = True
-focus_on_window_activation = "smart"
+focus_on_window_activation = 'smart'
